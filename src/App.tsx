@@ -32,6 +32,8 @@ import { Routes, Route, Link, useNavigate, Navigate, useParams } from "react-rou
 import { auth, db } from "./firebase";
 import { 
   signInWithPopup, 
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider, 
   onAuthStateChanged, 
   signOut,
@@ -193,6 +195,7 @@ function HomePage() {
   const [services, setServices] = useState<Service[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [isSettingsLoaded, setIsSettingsLoaded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -212,8 +215,14 @@ function HomePage() {
 
     // Fetch Settings
     const unsubSettings = onSnapshot(doc(db, "siteSettings", "main"), (doc) => {
-      if (doc.exists()) setSettings(doc.data() as SiteSettings);
-    }, (err) => handleFirestoreError(err, OperationType.GET, "siteSettings/main"));
+      if (doc.exists()) {
+        setSettings(doc.data() as SiteSettings);
+      }
+      setIsSettingsLoaded(true);
+    }, (err) => {
+      handleFirestoreError(err, OperationType.GET, "siteSettings/main");
+      setIsSettingsLoaded(true);
+    });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -230,6 +239,14 @@ function HomePage() {
   };
 
   const currentSettings = settings || defaultHero;
+
+  if (!isSettingsLoaded) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-brand border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -425,20 +442,30 @@ function HomePage() {
 
 function LoginPage({ user }: { user: User | null }) {
   const navigate = useNavigate();
-  useEffect(() => { if (user) navigate("/admin"); }, [user, navigate]);
+  
+  useEffect(() => { 
+    // Handle successful redirect
+    getRedirectResult(auth).catch((e) => console.error("Redirect check failed:", e));
+    
+    if (user) navigate("/admin"); 
+  }, [user, navigate]);
 
   const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    
     try {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
+      await signInWithPopup(auth, provider);
+    } catch (popupError: any) {
+      console.warn("Popup failed, switching to redirect mode...", popupError);
       
-      // Zkusíme nejdřív popup, ale pokud narazíme na tiché selhání, redirect je jistota
-      await signInWithPopup(auth, provider).catch(async (e) => {
-        console.error("Popup failed, switching to redirect:", e);
+      try {
+        // Using explicit named import variable in a traditional try/catch to avoid scoping issues
         await signInWithRedirect(auth, provider);
-      });
-    } catch (e: any) {
-      alert("Kritická chyba: " + e.message);
+      } catch (redirectError: any) {
+        console.error("Redirect login failed:", redirectError);
+        alert("Kritická chyba přihlášení: " + redirectError.message);
+      }
     }
   };
 
