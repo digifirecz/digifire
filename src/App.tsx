@@ -430,9 +430,15 @@ function LoginPage({ user }: { user: User | null }) {
   const handleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-    } catch (e) {
-      console.error(e);
+      provider.setCustomParameters({ prompt: 'select_account' });
+      
+      // Zkusíme nejdřív popup, ale pokud narazíme na tiché selhání, redirect je jistota
+      await signInWithPopup(auth, provider).catch(async (e) => {
+        console.error("Popup failed, switching to redirect:", e);
+        await signInWithRedirect(auth, provider);
+      });
+    } catch (e: any) {
+      alert("Kritická chyba: " + e.message);
     }
   };
 
