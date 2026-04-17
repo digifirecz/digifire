@@ -1,0 +1,86 @@
+{
+  "entities": {
+    "users": {
+      "title": "User",
+      "description": "Systémový uživatel / administrátor",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "editor"] }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "projects": {
+      "title": "Projekt",
+      "description": "Ukázka projektu v portfoliu",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "category", "image"]
+    },
+    "siteSettings": {
+      "title": "Nastavení webu",
+      "description": "Globální texty a nastavení hlavní stránky",
+      "type": "object",
+      "properties": {
+        "heroTitle": { "type": "string" },
+        "heroSubtitle": { "type": "string" },
+        "footerAbout": { "type": "string" }
+      },
+      "required": ["heroTitle", "heroSubtitle", "footerAbout"]
+    },
+    "services": {
+      "title": "Služba",
+      "description": "Nabízená služba agentury",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "description", "icon", "order"]
+    },
+    "leads": {
+      "title": "Poptávka",
+      "description": "Zájemce o služby přes kontaktní formulář",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["new", "contacted", "closed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "message", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "Profily uživatelů"
+    },
+    "/projects/{projectId}": {
+      "schema": "projects",
+      "description": "Projekty v portfoliu"
+    },
+    "/leads/{leadId}": {
+      "schema": "leads",
+      "description": "Poptávky od klientů"
+    },
+    "/siteSettings/{settingId}": {
+      "schema": "siteSettings",
+      "description": "Nastavení obsahu webu"
+    },
+    "/services/{serviceId}": {
+      "schema": "services",
+      "description": "Správa služeb"
+    }
+  }
+}
