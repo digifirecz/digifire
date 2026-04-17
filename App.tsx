@@ -236,22 +236,9 @@ function HomePage() {
       <Nav isScrolled={isScrolled} />
       
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-32 pb-32 overflow-hidden">
-        {/* Immersive Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" 
-            alt="Space Tech" 
-            className="w-full h-full object-cover opacity-20 dark:opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-main)] via-transparent to-[var(--bg-main)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-main)] via-transparent to-transparent" />
-        </div>
-
+      <section className="relative pt-64 pb-32 overflow-hidden">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] bg-brand/10 rounded-full blur-[120px] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -277,24 +264,20 @@ function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 bg-[var(--bg-offset)] border-y border-[var(--border-main)] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--brand) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="max-w-7xl mx-auto px-6 relative">
+      <section id="services" className="py-32 bg-[var(--bg-main)] border-t border-[var(--border-main)]">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="mb-20">
             <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-brand mb-4">Naše Specializace</h2>
             <p className="text-4xl md:text-5xl font-bold tracking-tighter">Služby, které <span className="text-[var(--text-muted)] italic">fungují.</span></p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.length > 0 ? services.map((s, i) => (
-              <div key={s.id} className="p-8 bg-[var(--bg-main)] rounded-[40px] border border-[var(--border-main)] transition-all hover:border-brand/40 group overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand/10 transition-colors" />
-                <div className="relative z-10">
-                  <div className="w-14 h-14 bg-brand rounded-2xl flex items-center justify-center text-white mb-8 shadow-xl transition-transform group-hover:scale-110 group-hover:rotate-3">
-                    {iconMap[s.icon] || <Zap />}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 tracking-tight">{s.title}</h3>
-                  <p className="text-[var(--text-muted)] font-light leading-relaxed mb-4">{s.description}</p>
+              <div key={s.id} className="p-10 bg-[var(--bg-offset)] rounded-3xl border border-[var(--border-main)] transition-all hover:border-brand/40 group">
+                <div className="text-brand mb-6 transition-transform group-hover:scale-110">
+                  {iconMap[s.icon] || <Zap />}
                 </div>
+                <h3 className="text-xl font-bold mb-4">{s.title}</h3>
+                <p className="text-[var(--text-muted)] font-light leading-relaxed">{s.description}</p>
               </div>
             )) : (
               <p className="text-[var(--text-muted)] opacity-50 italic">Zatím jsme nepřidali žádné služby...</p>
@@ -304,12 +287,8 @@ function HomePage() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-32 bg-[var(--bg-main)] relative overflow-hidden">
-        {/* Atmospheric Gradients */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 relative">
+      <section id="projects" className="py-32 bg-[var(--bg-main)]">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-20">
             <div>
               <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-brand mb-4">Vybrané práce</h2>
@@ -358,7 +337,7 @@ function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 bg-[var(--bg-offset)] border-t border-[var(--border-main)] overflow-hidden relative">
+      <section id="contact" className="py-32 bg-[var(--bg-main)] overflow-hidden relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="bg-[var(--bg-offset)] border border-[var(--border-main)] rounded-[60px] p-8 md:p-20 overflow-hidden relative">
@@ -376,7 +355,7 @@ function HomePage() {
                 <div className="space-y-6">
                   <div className="flex items-center gap-6">
                     <div className="w-12 h-12 bg-brand/10 text-brand rounded-xl flex items-center justify-center"><Mail className="w-6 h-6" /></div>
-                    <span className="text-lg font-medium">info@digifire.cz</span>
+                    <span className="text-lg font-medium">hello@digifire.agency</span>
                   </div>
                   <div className="flex items-center gap-6">
                     <div className="w-12 h-12 bg-brand/10 text-brand rounded-xl flex items-center justify-center"><Phone className="w-6 h-6" /></div>
