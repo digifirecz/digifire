@@ -7,17 +7,46 @@
   
   --color-brand: #FF4D00;
   --color-brand-alt: #FF8A00;
-  --color-bg-dark: #050505;
-  --color-bg-offset: #0F0F0F;
+  
+  /* Initial dark theme variables */
+  --bg-main: #050505;
+  --bg-offset: #0F0F0F;
+  --text-main: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --border-main: rgba(255, 255, 255, 0.05);
 }
 
 @layer base {
+  :root {
+    --bg-main: #050505;
+    --bg-offset: #0F0F0F;
+    --text-main: #FFFFFF;
+    --text-muted: rgba(255, 255, 255, 0.6);
+    --border-main: rgba(255, 255, 255, 0.05);
+  }
+
+  :root.light {
+    --bg-main: #FDFDFD;
+    --bg-offset: #F4F4F4;
+    --text-main: #050505;
+    --text-muted: rgba(5, 5, 5, 0.6);
+    --border-main: rgba(5, 5, 5, 0.1);
+  }
+
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
   body {
-    @apply bg-bg-dark text-white font-sans selection:bg-brand selection:text-white antialiased;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    @apply font-sans selection:bg-brand selection:text-white antialiased transition-colors duration-300;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-display tracking-tight;
   }
 }
 
