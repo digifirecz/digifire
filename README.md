@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Digifire Hub - Dokumentace Projektu
 
-# Run and deploy your AI Studio app
+Tento projekt je moderní full-stack webová aplikace pro digitální agenturu **digifire.cz**. Kombinuje rychlost Reactu s robustním backendem v Expressu a real-time databází Firebase.
 
-This contains everything you need to run your app locally.
+## 🚀 Technologie (Tech Stack)
 
-View your app in AI Studio: https://ai.studio/apps/b8f41986-3f87-4f99-b13f-ade287f463a1
+- **Frontend**: [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Motion](https://motion.dev/) (animace)
+- **Backend**: [Express.js](https://expressjs.com/) (pro obsluhu SPA routingu a produkční start)
+- **Databáze & Auth**: [Firebase](https://firebase.google.com/) (Firestore + Google Authentication)
+- **Ikony**: [Lucide React](https://lucide.dev/)
 
-## Run Locally
+## 📂 Struktura dokumentace
 
-**Prerequisites:**  Node.js
+Pro detailní informace o jednotlivých částech systému nahlédněte do složky `/docs`:
 
+1.  **[Architektura a Server](./docs/ARCHITECTURE.md)** – Jak funguje propojení Vite + Express a řešení 404 chyb.
+2.  **[Firebase & Auth](./docs/FIREBASE.md)** – Nastavení Google přihlášení, povolených domén a struktury dat.
+3.  **[Uživatelské rozhraní](./docs/UI_UX.md)** – Řešení vizuálních problémů (flickering) a tmavého režimu.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🛠️ Vývojové příkazy
+
+Všechny příkazy spouštějte v kořenovém adresáři:
+
+- `npm run dev`: Spustí vývojový server (Express + Vite) na portu 3000.
+- `npm run build`: Sestaví produkční verzi do složky `/dist`.
+- `npm start`: Spustí produkční server (používá `server.ts`).
+- `npm run lint`: Provede kontrolu typů v TypeScriptu.
+
+## 🔗 Důležité odkazy
+
+- **Produkční web**: [www.digifire.cz](https://www.digifire.cz)
+- **Firebase Konzole**: [Konzole projektu](https://console.firebase.google.com/project/gen-lang-client-0680928943/)
